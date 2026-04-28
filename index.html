@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday!</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --b1: #0EA5E9;
+    --b2: #38BDF8;
+    --b3: #7DD3FC;
+    --b4: #BAE6FD;
+    --bg: #F0FBFF;
+    --white: #FFFFFF;
+    --dark: #0C4A6E;
+    --mid: #0369A1;
+    --soft: #E0F7FF;
+    --yellow: #FCD34D;
+    --pink: #FB7185;
+    --green: #6EE7B7;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Kanit', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== HR PANEL ===== */
+  #hr-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background: linear-gradient(135deg, #0C4A6E 0%, #0369A1 50%, #0EA5E9 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hr-panel::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 30% 40%, rgba(56,189,248,0.2), transparent),
+                radial-gradient(ellipse 50% 70% at 80% 70%, rgba(252,211,77,0.1), transparent);
+    pointer-events: none;
+  }
+
+  .hr-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 28px;
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 520px;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+  }
+
+  .hr-logo {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .hr-logo .icon { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .hr-logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: white;
+    font-weight: 700;
+  }
+  .hr-logo p { color: rgba(255,255,255,0.55); font-size: 0.85rem; font-weight: 300; margin-top: 0.3rem; }
+
+  .hr-field { margin-bottom: 1.3rem; }
+  .hr-field label {
+    display: block;
+    color: var(--b3);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .hr-field input, .hr-field select, .hr-field textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
+    color: white;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .hr-field input::placeholder,
+  .hr-field textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .hr-field input:focus,
+  .hr-field select:focus,
+  .hr-field textarea:focus {
+    border-color: var(--b2);
+    background: rgba(255,255,255,0.12);
+  }
+  .hr-field textarea { resize: vertical; min-height: 80px; }
+  .hr-field select option { background: #0C4A6E; }
+
+  .hr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .wish-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;
+  }
+  .wish-tag {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.7);
+    border-radius: 100px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .wish-tag:hover, .wish-tag.on {
+    background: var(--b1);
+    border-color: var(--b1);
+    color: white;
+  }
+
+  .hr-hint {
+    color: rgba(255,255,255,0.35);
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .gen-btn {
+    width: 100%; margin-top: 1rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--b1), var(--b2));
+    color: white; border: none; border-radius: 14px;
+    font-family: 'Kanit', sans-serif;
+    font-size: 1rem; font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(14,165,233,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .gen-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(14,165,233,0.5); }
+
+  .link-box {
+    margin-top: 1.5rem;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(56,189,248,0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    display: none;
+  }
+  .link-box label { color: var(--b3); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; display: block; margin-bottom: 0.4rem; }
+  .link-url {
+    color: var(--b2);
+    font-size: 0.82rem;
+    word-break: break-all;
+    line-height: 1.5;
+    font-weight: 300;
+  }
+  .link-actions { display: flex; gap: 0.6rem; margin-top: 0.8rem; }
+  .link-btn {
+    flex: 1; padding: 0.55rem 0;
+    border-radius: 8px; border: none;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .link-btn.copy { background: var(--b1); color: white; }
+  .link-btn.preview { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+  .link-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+  /* ===== BIRTHDAY PAGE ===== */
+  #bday-page {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* animated sky bg */
+  .sky-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: linear-gradient(160deg, #E0F7FF 0%, #BAE6FD 40%, #7DD3FC 100%);
+  }
+  .sky-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 20%, rgba(255,255,255,0.6), transparent),
+      radial-gradient(ellipse 50% 60% at 80% 80%, rgba(14,165,233,0.2), transparent);
+  }
+
+  /* clouds */
+  .cloud {
+    position: fixed; z-index: 1;
+    background: white; border-radius: 50px;
+    opacity: 0.7;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+  .cloud::before, .cloud::after {
+    content: ''; position: absolute;
+    background: white; border-radius: 50%;
+  }
+  .cloud-1 { width: 140px; height: 40px; top: 12%; left: -160px; animation: cloudMove 22s linear infinite; }
+  .cloud-1::before { width: 70px; height: 70px; top: -35px; left: 20px; }
+  .cloud-1::after { width: 50px; height: 50px; top: -25px; left: 60px; }
+  .cloud-2 { width: 100px; height: 30px; top: 28%; left: -120px; animation: cloudMove 30s linear 8s infinite; opacity: 0.5; }
+  .cloud-2::before { width: 55px; height: 55px; top: -28px; left: 15px; }
+  .cloud-2::after { width: 40px; height: 40px; top: -20px; left: 45px; }
+  .cloud-3 { width: 120px; height: 35px; top: 8%; left: -140px; animation: cloudMove 26s linear 14s infinite; opacity: 0.4; }
+  .cloud-3::before { width: 60px; height: 60px; top: -30px; left: 18px; }
+  .cloud-3::after { width: 45px; height: 45px; top: -22px; left: 55px; }
+  @keyframes cloudMove { from { left: -160px; } to { left: 110vw; } }
+
+  /* content */
+  .bday-content {
+    position: relative; z-index: 2;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .balloons-wrap {
+    display: flex; gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease forwards; opacity: 0;
+  }
+  .bal {
+    font-size: 3rem;
+    display: inline-block;
+    animation: balSway 2.5s ease-in-out infinite;
+    filter: drop-shadow(0 6px 12px rgba(14,165,233,0.3));
+  }
+  .bal:nth-child(2) { animation-delay: 0.25s; font-size: 3.5rem; }
+  .bal:nth-child(3) { animation-delay: 0.5s; }
+  @keyframes balSway { 0%,100%{transform:rotate(-8deg) translateY(0)} 50%{transform:rotate(8deg) translateY(-10px)} }
+
+  .bday-tag {
+    background: linear-gradient(135deg, var(--b1), #0284C7);
+    color: white; border-radius: 100px;
+    padding: 0.4rem 1.5rem;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    animation: fadeUp 0.8s 0.2s ease forwards; opacity: 0;
+    box-shadow: 0 4px 16px rgba(14,165,233,0.4);
+    display: inline-block;
+  }
+
+  .bday-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 12vw, 6.5rem);
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.05;
+    animation: fadeUp 0.8s 0.4s ease forwards; opacity: 0;
+    position: relative;
+  }
+  .bday-name span {
+    background: linear-gradient(135deg, var(--b1) 0%, #0284C7 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block; font-style: italic; font-size: 0.65em;
+  }
+
+  .bday-msg {
+    margin-top: 1rem;
+    color: var(--mid);
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    font-weight: 300;
+    line-height: 1.9;
+    max-width: 480px;
+    animation: fadeUp 0.8s 0.6s ease forwards; opacity: 0;
+  }
+
+  /* music player */
+  .music-bar {
+    margin-top: 2rem;
+    background: white;
+    border-radius: 100px;
+    padding: 0.7rem 1.4rem;
+    display: flex; align-items: center; gap: 0.8rem;
+    box-shadow: 0 8px 30px rgba(14,165,233,0.2);
+    animation: fadeUp 0.8s 0.8s ease forwards; opacity: 0;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+    max-width: 320px; width: 100%;
+  }
+  .music-bar:hover { box-shadow: 0 12px 40px rgba(14,165,233,0.35); }
+  .music-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--b1), var(--b2));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: white;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  .music-bar:hover .music-icon { transform: scale(1.1); }
+  .music-info { flex: 1; text-align: left; }
+  .music-info .mtitle { font-size: 0.8rem; font-weight: 500; color: var(--dark); }
+  .music-info .msub { font-size: 0.7rem; color: #64B6D0; font-weight: 300; }
+  .music-wave { display: flex; align-items: center; gap: 2px; }
+  .music-wave span {
+    display: block; width: 3px; border-radius: 3px;
+    background: var(--b1);
+    animation: wave 0.8s ease-in-out infinite alternate;
+  }
+  .music-wave span:nth-child(1) { height: 8px; }
+  .music-wave span:nth-child(2) { height: 16px; animation-delay: 0.15s; }
+  .music-wave span:nth-child(3) { height: 10px; animation-delay: 0.3s; }
+  .music-wave span:nth-child(4) { height: 20px; animation-delay: 0.45s; }
+  .music-wave span:nth-child(5) { height: 12px; animation-delay: 0.6s; }
+  .music-wave.paused span { animation-play-state: paused; height: 4px !important; }
+  @keyframes wave { from { transform: scaleY(0.5); } to { transform: scaleY(1); } }
+
+  /* wishes wall */
+  .wishes-wall {
+    margin-top: 3rem;
+    width: 100%; max-width: 900px;
+    animation: fadeUp 0.8s 1s ease forwards; opacity: 0;
+  }
+  .wishes-wall h2 {
+    color: var(--dark);
+    font-size: 1.2rem; font-weight: 500;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+  .wishes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .w-card {
+    background: white;
+    border-radius: 18px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(14,165,233,0.1);
+    border: 2px solid transparent;
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .w-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(14,165,233,0.18); }
+  .w-card.c1 { border-color: #BAE6FD; }
+  .w-card.c2 { border-color: #FEF3C7; }
+  .w-card.c3 { border-color: #D1FAE5; }
+  .w-card.c4 { border-color: #FCE7F3; }
+  .w-emoji { font-size: 1.8rem; margin-bottom: 0.6rem; }
+  .w-text { color: var(--dark); font-size: 0.9rem; line-height: 1.7; font-weight: 300; }
+
+  /* add wish form inline */
+  .add-wish-wrap {
+    margin-top: 2rem;
+    width: 100%; max-width: 500px;
+  }
+  .add-wish-box {
+    background: white;
+    border-radius: 20px;
+    padding: 1.8rem;
+    box-shadow: 0 4px 24px rgba(14,165,233,0.1);
+  }
+  .add-wish-box h3 { color: var(--dark); font-size: 1rem; font-weight: 500; margin-bottom: 1rem; }
+  .aw-emoji-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .aw-ep {
+    font-size: 1.3rem; cursor: pointer;
+    background: var(--soft); border-radius: 8px;
+    padding: 0.2rem 0.35rem;
+    border: 2px solid transparent;
+    transition: all 0.2s; opacity: 0.6;
+  }
+  .aw-ep:hover, .aw-ep.on { opacity: 1; border-color: var(--b1); background: #E0F7FF; transform: scale(1.1); }
+  .aw-input {
+    width: 100%;
+    background: var(--soft);
+    border: 2px solid rgba(56,189,248,0.2);
+    border-radius: 12px;
+    padding: 0.8rem 1rem;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.9rem; font-weight: 300;
+    color: var(--dark); outline: none;
+    transition: border-color 0.2s;
+    resize: vertical; min-height: 80px;
+  }
+  .aw-input:focus { border-color: var(--b1); background: white; }
+  .aw-btn {
+    width: 100%; margin-top: 0.8rem;
+    padding: 0.8rem;
+    background: linear-gradient(135deg, var(--b1), var(--b2));
+    color: white; border: none; border-radius: 12px;
+    font-family: 'Kanit', sans-serif;
+    font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(14,165,233,0.3);
+  }
+  .aw-btn:hover { transform: translateY(-2px); }
+
+  /* star confetti */
+  .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+  .confetti-piece {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+    opacity: 0;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+  /* toast */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: linear-gradient(135deg, var(--b1), #0284C7);
+    color: white; padding: 0.7rem 1.8rem;
+    border-radius: 100px; font-size: 0.9rem; font-weight: 500;
+    z-index: 9999; box-shadow: 0 6px 20px rgba(14,165,233,0.4);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* floating emoji */
+  @keyframes riseUp { 0%{opacity:0;transform:translateY(0) scale(0.5)} 10%{opacity:0.6} 90%{opacity:0.3} 100%{opacity:0;transform:translateY(-110vh) scale(1)} }
+
+  @media (max-width: 600px) { .hr-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- ===== HR PANEL ===== -->
+<div id="hr-panel">
+  <div class="hr-card">
+    <div class="hr-logo">
+      <span class="icon">🎂</span>
+      <h1>Birthday Creator</h1>
+      <p>สร้างลิงก์อวยพรวันเกิดพนักงาน</p>
+    </div>
+
+    <div class="hr-row">
+      <div class="hr-field">
+        <label>ชื่อพนักงาน</label>
+        <input type="text" id="empName" placeholder="เช่น Peter, สมชาย" />
+      </div>
+      <div class="hr-field">
+        <label>แผนก (ไม่บังคับ)</label>
+        <input type="text" id="empDept" placeholder="เช่น Marketing" />
+      </div>
+    </div>
+
+    <div class="hr-field">
+      <label>ข้อความอวยพรหลัก</label>
+      <textarea id="empMsg" placeholder="เช่น ขอให้มีความสุขมากๆ นะคะ สุขภาพแข็งแรง โชคดีตลอดปี 🎉"></textarea>
+    </div>
+
+    <div class="hr-field">
+      <label>เลือกธีมคำอวยพร</label>
+      <div class="wish-tags" id="wishTags">
+        <span class="wish-tag on" data-val="สุขภาพดี">💪 สุขภาพดี</span>
+        <span class="wish-tag on" data-val="โชคดี">🍀 โชคดี</span>
+        <span class="wish-tag on" data-val="ร่ำรวย">💰 ร่ำรวย</span>
+        <span class="wish-tag" data-val="ความรัก">💕 ความรัก</span>
+        <span class="wish-tag" data-val="ความสำเร็จ">🏆 ความสำเร็จ</span>
+        <span class="wish-tag" data-val="ความสุข">😊 ความสุข</span>
+      </div>
+    </div>
+
+    <div class="hr-field">
+      <label>ลิงก์เพลง YouTube</label>
+      <input type="text" id="songUrl" placeholder="https://www.youtube.com/watch?v=..." />
+      <div class="hr-hint">วางลิงก์ YouTube ได้เลย — เพลงจะเล่นอัตโนมัติเมื่อเปิดหน้าวันเกิด 🎵</div>
+    </div>
+
+    <button class="gen-btn" onclick="generateLink()">✨ สร้างลิงก์วันเกิด</button>
+
+    <div class="link-box" id="linkBox">
+      <label>ลิงก์สำหรับแชร์</label>
+      <div class="link-url" id="linkUrl"></div>
+      <div class="link-actions">
+        <button class="link-btn copy" onclick="copyLink()">📋 คัดลอก</button>
+        <button class="link-btn preview" onclick="previewPage()">👁 พรีวิว</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BIRTHDAY PAGE ===== -->
+<div id="bday-page">
+  <div class="sky-bg"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="confetti-container" id="confettiContainer"></div>
+
+  <!-- hidden YouTube iframe -->
+  <iframe id="ytFrame" style="display:none;" allow="autoplay" allowfullscreen></iframe>
+
+  <div class="bday-content">
+    <div class="balloons-wrap">
+      <span class="bal">🎈</span>
+      <span class="bal">🎂</span>
+      <span class="bal">🎈</span>
+    </div>
+
+    <div class="bday-tag">✨ Happy Birthday ✨</div>
+
+    <h1 class="bday-name">
+      <span>วันเกิดของ</span>
+      <span id="displayName" style="font-style:normal; -webkit-text-fill-color: initial; background:none; color:var(--dark); font-size:1.3em; display:block;"></span>
+    </h1>
+
+    <p class="bday-msg" id="displayMsg">ขอให้มีความสุขมากๆ นะคะ</p>
+
+    <div class="music-bar" id="musicBar" onclick="toggleMusic()" style="display:none;">
+      <div class="music-icon">🎵</div>
+      <div class="music-info">
+        <div class="mtitle">เพลงอวยพร</div>
+        <div class="msub" id="musicStatus">กำลังเล่น...</div>
+      </div>
+      <div class="music-wave" id="musicWave">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="wishes-wall" id="wishesWall">
+      <h2>💙 คำอวยพรจากทุกคน</h2>
+      <div class="wishes-grid" id="wishesGrid"></div>
+    </div>
+
+    <div class="add-wish-wrap">
+      <div class="add-wish-box">
+        <h3>✉️ ส่งคำอวยพรเพิ่ม</h3>
+        <div class="aw-emoji-row" id="awEmojiRow">
+          <span class="aw-ep on" onclick="awPick(this,'🎂')">🎂</span>
+          <span class="aw-ep" onclick="awPick(this,'🌸')">🌸</span>
+          <span class="aw-ep" onclick="awPick(this,'⭐')">⭐</span>
+          <span class="aw-ep" onclick="awPick(this,'💙')">💙</span>
+          <span class="aw-ep" onclick="awPick(this,'🎉')">🎉</span>
+          <span class="aw-ep" onclick="awPick(this,'🌈')">🌈</span>
+          <span class="aw-ep" onclick="awPick(this,'✨')">✨</span>
+          <span class="aw-ep" onclick="awPick(this,'🥳')">🥳</span>
+        </div>
+        <textarea class="aw-input" id="awText" placeholder="เขียนคำอวยพรถึงเจ้าของวันเกิด..."></textarea>
+        <button class="aw-btn" onclick="addWish()">ส่งคำอวยพร 🎈</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ---- TAG TOGGLE ----
+  document.querySelectorAll('.wish-tag').forEach(t => {
+    t.addEventListener('click', () => t.classList.toggle('on'));
+  });
+
+  // ---- GENERATE LINK ----
+  function generateLink() {
+    const name = document.getElementById('empName').value.trim();
+    if (!name) { showToast('กรุณากรอกชื่อพนักงานก่อนนะคะ 🙏'); return; }
+
+    const msg  = document.getElementById('empMsg').value.trim();
+    const song = document.getElementById('songUrl').value.trim();
+    const tags = [...document.querySelectorAll('.wish-tag.on')].map(t => t.dataset.val);
+
+    const base = window.location.href.split('?')[0];
+    let url = `${base}?name=${encodeURIComponent(name)}`;
+    if (msg)  url += `&msg=${encodeURIComponent(msg)}`;
+    if (song) url += `&song=${encodeURIComponent(song)}`;
+    if (tags.length) url += `&tags=${encodeURIComponent(tags.join(','))}`;
+
+    document.getElementById('linkUrl').textContent = url;
+    document.getElementById('linkBox').style.display = 'block';
+    showToast('สร้างลิงก์เรียบร้อยแล้ว! 🎉');
+  }
+
+  function copyLink() {
+    const url = document.getElementById('linkUrl').textContent;
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(url).then(() => showToast('คัดลอกลิงก์แล้ว! 📋'));
+    } else {
+      const el = document.createElement('textarea');
+      el.value = url;
+      el.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+      document.body.appendChild(el);
+      el.focus(); el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      showToast('คัดลอกลิงก์แล้ว! 📋');
+    }
+  }
+
+  function previewPage() {
+    const url = document.getElementById('linkUrl').textContent;
+    window.location.href = url;
+  }
+
+  // ---- BIRTHDAY PAGE ----
+  const params = new URLSearchParams(window.location.search);
+  const pName = params.get('name');
+
+  if (pName) {
+    document.getElementById('hr-panel').style.display = 'none';
+    document.getElementById('bday-page').style.display = 'block';
+    document.title = `Happy Birthday ${pName}! 🎂`;
+
+    document.getElementById('displayName').textContent = pName;
+
+    const msg = params.get('msg') || `ขอให้มีความสุขมากๆ นะคะ สุขภาพแข็งแรง โชคดีตลอดปี 🎉`;
+    document.getElementById('displayMsg').textContent = msg;
+
+    // tags → wish cards
+    const tags = params.get('tags') ? params.get('tags').split(',') : ['สุขภาพดี','โชคดี','ร่ำรวย'];
+    const tagCards = {
+      'สุขภาพดี':   { e:'💪', t:`ขอให้${pName}มีสุขภาพแข็งแรง ไม่เจ็บไม่ป่วย พลังงานเต็มเปี่ยมตลอดทั้งปีเลยนะคะ`, c:'c3' },
+      'โชคดี':      { e:'🍀', t:`ขอให้โชคดีในทุกเรื่อง ทุกก้าวที่เดินไปมีแต่โอกาสดีๆ รออยู่เสมอนะคะ`, c:'c1' },
+      'ร่ำรวย':     { e:'💰', t:`ขอให้เงินทองไหลมาเทมา ร่ำรวยมีทรัพย์ ไม่ขัดสนตลอดชีวิตเลยนะคะ`, c:'c2' },
+      'ความรัก':    { e:'💕', t:`ขอให้มีความรักที่อบอุ่น มีคนที่รักและห่วงใยอยู่เคียงข้างเสมอนะคะ`, c:'c4' },
+      'ความสำเร็จ': { e:'🏆', t:`ขอให้ประสบความสำเร็จในทุกสิ่งที่ตั้งใจ ก้าวหน้าในหน้าที่การงานนะคะ`, c:'c1' },
+      'ความสุข':    { e:'😊', t:`ขอให้มีรอยยิ้มและเสียงหัวเราะทุกวัน มีความสุขที่แท้จริงตลอดไปนะคะ`, c:'c3' },
+    };
+
+    const grid = document.getElementById('wishesGrid');
+    tags.forEach(tag => {
+      const d = tagCards[tag];
+      if (!d) return;
+      const card = document.createElement('div');
+      card.className = `w-card ${d.c}`;
+      card.innerHTML = `<div class="w-emoji">${d.e}</div><p class="w-text">${d.t}</p>`;
+      grid.appendChild(card);
+    });
+
+    // Music
+    const song = params.get('song');
+    if (song) {
+      const ytMatch = song.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+      if (ytMatch) {
+        const vid = ytMatch[1];
+        const frame = document.getElementById('ytFrame');
+        frame.src = `https://www.youtube.com/embed/${vid}?autoplay=1&loop=1&playlist=${vid}&controls=0`;
+        document.getElementById('musicBar').style.display = 'flex';
+      }
+    }
+
+    // confetti burst
+    setTimeout(() => burstConfetti(), 600);
+
+    // floating emojis
+    const floatEmojis = ['🎈','⭐','🌟','💙','✨','🎊','🌸','🎂'];
+    setInterval(() => {
+      const el = document.createElement('div');
+      el.textContent = floatEmojis[Math.floor(Math.random() * floatEmojis.length)];
+      Object.assign(el.style, {
+        position:'fixed', left: Math.random()*100+'vw', bottom:'-3rem',
+        fontSize:(1+Math.random())+'rem', opacity:'0',
+        pointerEvents:'none', zIndex:'1',
+        animation:`riseUp ${7+Math.random()*5}s ease-out forwards`
+      });
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 13000);
+    }, 1500);
+  }
+
+  // ---- MUSIC TOGGLE ----
+  let playing = true;
+  function toggleMusic() {
+    const frame = document.getElementById('ytFrame');
+    const wave = document.getElementById('musicWave');
+    const status = document.getElementById('musicStatus');
+    if (playing) {
+      frame.src = frame.src.replace('autoplay=1','autoplay=0');
+      wave.classList.add('paused');
+      status.textContent = 'หยุดชั่วคราว';
+    } else {
+      frame.src = frame.src.replace('autoplay=0','autoplay=1');
+      wave.classList.remove('paused');
+      status.textContent = 'กำลังเล่น...';
+    }
+    playing = !playing;
+  }
+
+  // ---- ADD WISH ----
+  let awEmoji = '🎂';
+  const colors = ['c1','c2','c3','c4'];
+  let ci = 0;
+
+  function awPick(el, e) {
+    document.querySelectorAll('.aw-ep').forEach(x => x.classList.remove('on'));
+    el.classList.add('on'); awEmoji = e;
+  }
+
+  function addWish() {
+    const txt = document.getElementById('awText').value.trim();
+    if (!txt) { showToast('กรุณาเขียนคำอวยพรก่อนนะคะ 🙏'); return; }
+    const grid = document.getElementById('wishesGrid');
+    const card = document.createElement('div');
+    card.className = `w-card ${colors[ci % colors.length]}`;
+    card.innerHTML = `<div class="w-emoji">${awEmoji}</div><p class="w-text">${esc(txt)}</p>`;
+    grid.appendChild(card);
+    ci++;
+    document.getElementById('awText').value = '';
+    showToast('ส่งคำอวยพรแล้ว! 🎉');
+    burstConfetti();
+  }
+
+  // ---- CONFETTI ----
+  function burstConfetti() {
+    const colors2 = ['#38BDF8','#FCD34D','#FB7185','#6EE7B7','#A78BFA','#FFFFFF'];
+    const container = document.getElementById('confettiContainer');
+    for (let i = 0; i < 60; i++) {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.cssText = `
+        left:${Math.random()*100}vw;
+        top:-10px;
+        background:${colors2[Math.floor(Math.random()*colors2.length)]};
+        width:${6+Math.random()*8}px;
+        height:${6+Math.random()*8}px;
+        border-radius:${Math.random()>0.5?'50%':'2px'};
+        animation-duration:${2+Math.random()*2}s;
+        animation-delay:${Math.random()*0.8}s;
+      `;
+      container.appendChild(p);
+      setTimeout(() => p.remove(), 4000);
+    }
+  }
+
+  // ---- UTILS ----
+  function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+</script>
+</body>
+</html>
